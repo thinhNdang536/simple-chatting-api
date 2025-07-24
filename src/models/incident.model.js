@@ -1,54 +1,51 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../configs/database.js');
 
-const Post = sequelize.define('Post', {
-    postId: {
+const Incident = sequelize.define('Incident', {
+    incidentId: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
         required: true,
     },
-    userId: {
+    postId: {
         type: DataTypes.INTEGER.UNSIGNED,
         required: true,
     },
-    communityId: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        required: true,
-    },
-    postType: {
-        type: DataTypes.ENUM('feed', 'poll', 'incident'),
-        defaultValue: 'feed',
+    severity: {
+        type: DataTypes.ENUM('low', 'medium', 'high'),
+        defaultValue: 'medium',
         allowNull: false,
         required: true
     },
-    title: {
+    location: {
         type: DataTypes.STRING(100),
         required: true,
     },
-    body: {
-        type: DataTypes.STRING(500),
+    openedBy: {
+        type: DataTypes.INTEGER.UNSIGNED,
         required: true,
     },
-    createAt: {
+    openedAt: {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    tagList: {
-        type: DataTypes.STRING(100),
-        defaultValue: 'exampleTag'
+    closedBy: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
     },
-    isPinned: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    closedAt: {
+        type: DataTypes.DATEONLY,
+        allowNull: true
     },
-    viewCount: {
+    secondsToClose: {
         type: DataTypes.INTEGER,
+        allowNull: true,
         defaultValue: 0
-    },
+    }
 }, {
-    tableName: 'Post',
+    tableName: 'Incident',
     timestamps: false
 });
 
-module.exports = Post;
+module.exports = Incident;
